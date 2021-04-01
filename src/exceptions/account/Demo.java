@@ -30,7 +30,7 @@ public class Demo {
 
         try {
             Sparkasse.transfer(fromowner, toowner, amount);
-            System.out.println("Transfering "+amount+" from "+fromowner+" to "+toowner);
+            System.out.println("Transfering " + amount + " from " + fromowner + " to " + toowner);
         } catch (AccountnotfoundException e) {
             e.printStackTrace();
         } catch (BankException e) {
