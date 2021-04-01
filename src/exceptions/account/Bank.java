@@ -23,11 +23,29 @@ public class Bank {
         accounts.put(owner, new Account(owner, balance, overdraftFrame));
     }
 
-    public void transfer(String fromOwner, String toOwner,double amount) throws AccountNotFoundException, BankException {
-        double balancefromowner = accounts.get(fromOwner).getBalance();
-        double balancetoowner = accounts.get(toOwner).getBalance();
-        accounts.put(fromOwner, new Account(fromOwner, balancefromowner - amount, accounts.get(fromOwner).getOverdraftFrame()));
-        accounts.put(toOwner, new Account(toOwner, balancetoowner + amount, accounts.get(toOwner).getOverdraftFrame()));
+    public void transfer(String fromOwner, String toOwner,double amount) throws BankException, AccountnotfoundException {
+        /*double balancefromowner = accounts.get(fromOwner).getBalance();
+        double balancetoowner = accounts.get(toOwner).getBalance();*/
+        Account fromowner = accounts.get(fromOwner);
+        Account toowner = accounts.get(toOwner);
+
+        if (!accounts.containsKey(fromOwner) || !accounts.containsKey(toOwner)) {
+            throw new AccountnotfoundException();
+        }
+
+        try {
+            fromowner.debit(amount);
+            toowner.credit(amount);
+        } catch (NotEnoughMoneyException e) {
+            throw new BankException("the transaction was not successful",e);
+        }
+
+        /*try {
+            accounts.put(fromOwner, new Account(fromOwner, balancefromowner - amount, accounts.get(fromOwner).getOverdraftFrame()));
+            accounts.put(toOwner, new Account(toOwner, balancetoowner + amount, accounts.get(toOwner).getOverdraftFrame()));
+        } catch (BankException e) {
+            e.printStackTrace();
+        }*/
 
     }
 

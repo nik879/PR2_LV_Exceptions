@@ -27,9 +27,9 @@ public class Account {
         balance += amount;
     }
 
-    public void dedit(double amount) throws NotEnoughMoneyException {
+    public void debit(double amount) throws NotEnoughMoneyException {
         if (balance + overdraftFrame - amount < 0) {
-            throw new NotEnoughMoneyException();
+            throw new NotEnoughMoneyException("Not Enough money on the bankaccount");
         }
         balance -= amount;
     }
